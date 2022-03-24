@@ -1,0 +1,32 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "server API for Capstone Project (Nutrition app backOffice)",
+  "main": "server.js",
+  "scripts": {
+    "test": "node server.js",
+    "start": "nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/marcositu6/Nutrition-App-BackOffice-API.git"
+  },
+  "keywords": [
+    "Server",
+    "API",
+    "Express",
+    "MongoDB",
+    "Axios"
+  ],
+  "author": "Marcos Iturriaga",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/marcositu6/Nutrition-App-BackOffice-API/issues"
+  },
+  "homepage": "https://github.com/marcositu6/Nutrition-App-BackOffice-API#readme",
+  "dependencies": {
+    "dotenv": "^16.0.0",
+    "express": "^4.17.3",
+    "nodemon": "^2.0.15"
+  }
+}
