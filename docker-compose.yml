@@ -4,7 +4,7 @@ services:
   build:
    context: .
    dockerfile: ./images/mongo/Dockerfile
-  container_name: aurea_mongodb
+  container_name: aurea_mongodbBO
   ports:
    - '27017:27017'
   environment:

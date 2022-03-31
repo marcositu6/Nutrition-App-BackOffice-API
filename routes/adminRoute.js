@@ -11,7 +11,7 @@ router.get("/", (req, res) => {
       });
     })
     .catch((err) => {
-      res.status(404).send("Users not found.");
+      res.status(404).send("Admin not found.");
     });
 });
 
@@ -38,15 +38,15 @@ router.get("/:id", getAdmin, (req, res) => {
 
 // EDIT inventory by ID
 router.patch("/:id", getAdmin, async (req, res) => {
-  if (req.body.email != null) {
-    res.user.email = req.body.email;
+  if (req.body.role != null) {
+    res.user.role = req.body.role;
   }
-  if (req.body.password != null) {
-    res.user.password = req.body.password;
+  if (req.body.permissions != null) {
+    res.user.permissions = req.body.permissions;
   }
   try {
-    const updatedUser = await res.user.save();
-    res.json(updatedUser);
+    const updatedAdmin = await res.admin.save();
+    res.json(updatedAdmin);
   } catch (err) {
     res.status(400).json({ message: err.message });
   }
@@ -56,23 +56,23 @@ router.patch("/:id", getAdmin, async (req, res) => {
 // route -> POST /api/v1/users
 /* INCOMING DATA FORMAT
     {
-      "email": "jhonnymaster@testing.com",
-      "password": "very secure password"
+      "role": "ADMIN",
+      "permissions": {"MODIFYALLERGIES", "DELETEUSER", "MODIFYUSER"}
     },
  */
 router.post("/", async (req, res) => {
-  const user = new User({
-    email: req.body.email,
-    password: req.body.password,
+  const admin = new Admin({
+    role: req.body.role,
+    permissions: req.body.permissions,
   });
 
-  await user.save(function (err) {
+  await admin.save(function (err) {
     if (err) {
       console.log(err);
     }
     // saved!
   });
-  res.status(201).json(user);
+  res.status(201).json(admin);
 });
 
 // delete an inventory item

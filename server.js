@@ -19,13 +19,15 @@ db.on("error", (error) => console.error(error));
 db.once("open", () => console.log("node connected to database"));
 
 const userRoute = require("./routes/userRoute");
-const adminRoute = require("./routes/admin");
-const patientRoute = require("./routes/adminRoute");
+const adminRoute = require("./routes/adminRoute");
+const patientRoute = require("./routes/patientRoute");
 
 const app = express();
 app.use(express.json());
 app.use(cors());
 
 app.use("/api/v1/users", userRoute);
+app.use("/api/v1/admin", adminRoute);
+app.use("/api/v1/patient", patientRoute);
 
 app.listen(PORT, () => console.log(`Listening on ${PORT}`));

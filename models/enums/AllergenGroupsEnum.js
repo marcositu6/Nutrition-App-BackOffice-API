@@ -1,4 +1,4 @@
-const NutritionalPreferences = Object.freeze({
+const AllergenGroups = Object.freeze({
   GLUTEN: "GLUTEN",
   CRUSTACEANS: "CRUSTACEANS",
   EGGS: "EGGS",
@@ -14,4 +14,4 @@ const NutritionalPreferences = Object.freeze({
   LUPINS: "LUPINS",
 });
 
-module.exports = NutritionalPreferences;
+module.exports = AllergenGroups;

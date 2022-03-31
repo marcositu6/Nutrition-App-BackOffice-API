@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 import Gender from "./enums/GenderEnum";
 import MealType from "./enums/MealTypeEnum";
-import NutritionalPreferences from "./enums/NutritionalPreferencesEnum";
+import NutritionalPreferences from "./enums/AllergenGroupsEnum";
 import Objective from "./enums/ObjectiveEnum";
 
 const Patient = new mongoose.Schema(
@@ -53,9 +53,11 @@ const Patient = new mongoose.Schema(
       enum: Objective,
     },
     nutritionalPreferences: {
-      type: String,
-      required: true,
-      enum: NutritionalPreferences,
+      allergenGroups: {
+        type: Array,
+        required: true,
+        enum: AllergenGroups,
+      },
     },
     habits: {
       activityLevel: {
@@ -64,7 +66,7 @@ const Patient = new mongoose.Schema(
         enum: activityLevel,
       },
       dailyMeals: {
-        type: String,
+        type: Array,
         required: true,
         enum: MealType,
       },
