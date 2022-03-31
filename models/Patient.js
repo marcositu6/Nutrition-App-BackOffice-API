@@ -1,8 +1,8 @@
 const mongoose = require("mongoose");
-import Gender from "./enums/GenderEnum";
-import MealType from "./enums/MealTypeEnum";
-import NutritionalPreferences from "./enums/AllergenGroupsEnum";
-import Objective from "./enums/ObjectiveEnum";
+const Gender = require("./enums/GenderEnum");
+const MealType = require("./enums/MealTypeEnum");
+const AllergenGroups = require("./enums/AllergenGroupsEnum");
+const Objective = require("./enums/ObjectiveEnum");
 
 const Patient = new mongoose.Schema(
   {
@@ -77,7 +77,7 @@ const Patient = new mongoose.Schema(
       default: false,
     },
     user: {
-      type: Schema.Types.ObjectId,
+      type: mongoose.Schema.Types.ObjectId,
       ref: "User",
     },
   },
