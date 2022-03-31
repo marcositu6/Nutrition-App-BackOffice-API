@@ -5,7 +5,8 @@
   "main": "server.js",
   "scripts": {
     "test": "node server.js",
-    "start": "nodemon server.js"
+    "start": "nodemon server.js",
+    "local": "nest start --watch"
   },
   "repository": {
     "type": "git",
@@ -25,8 +26,13 @@
   },
   "homepage": "https://github.com/marcositu6/Nutrition-App-BackOffice-API#readme",
   "dependencies": {
-    "dotenv": "^16.0.0",
+    "cors": "^2.8.5",
     "express": "^4.17.3",
+    "mongoose": "^6.2.9",
+    "uuidv4": "^6.2.13"
+  },
+  "devDependencies": {
+    "dotenv": "^16.0.0",
     "nodemon": "^2.0.15"
   }
 }

@@ -1,0 +1,18 @@
+version: '3.3'
+services:
+ mongo:
+  build:
+   context: .
+   dockerfile: ./images/mongo/Dockerfile
+  container_name: aurea_mongodb
+  ports:
+   - '27017:27017'
+  environment:
+   MONGO_INITDB_ROOT_USERNAME: root
+   MONGO_INITDB_ROOT_PASSWORD: rootroot
+   MONGO_INITDB_DATABASE: aureaBO
+  volumes:
+   - mongo:/data/db
+
+volumes:
+ mongo:
