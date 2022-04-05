@@ -12,7 +12,8 @@ mongoose
       autoIndex: true,
     }
   )
-  .then(() => console.log("connected to server"));
+  .then(() => console.log("connected to server"))
+  .catch((err) => console.error(err));
 
 const db = mongoose.connection;
 db.on("error", (error) => console.error(error));

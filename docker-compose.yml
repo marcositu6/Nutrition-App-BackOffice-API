@@ -1,18 +1,55 @@
+# version: '3.3'
+# services:
+#   app:
+#     container_name: app
+#     restart: always
+#     build: 
+#        context: .
+#        dockerfile: ./images/mongo/Dockerfile
+#     ports:
+#       - "3000:3000"
+#     networks:
+#       - mongo
+#   mongo:
+#     restart: always
+#     container_name: mongo
+#     image: mongo
+#     expose: 
+#       - 27017
+#     volumes:
+#       - mongodata:/data/db
+#     ports:
+#       - '27018:27018'
+#     environment:
+#          MONGO_INITDB_ROOT_USERNAME: root
+#          MONGO_INITDB_ROOT_PASSWORD: rootroot
+#          MONGO_INITDB_DATABASE: aureaBO
+#          MONGO_PRIMARY_PORT_NUMBER: 27018
+# volumes:
+#   mongodata:
+# networks:
+#   mongo:
+#     external: true
+
 version: '3.3'
 services:
  mongo:
   build:
    context: .
    dockerfile: ./images/mongo/Dockerfile
-  container_name: aurea_mongodbBO
+  container_name: aureaBO_mongodb
   ports:
-   - '27017:27017'
+   - '27015:27017'
   environment:
    MONGO_INITDB_ROOT_USERNAME: root
    MONGO_INITDB_ROOT_PASSWORD: rootroot
    MONGO_INITDB_DATABASE: aureaBO
   volumes:
-   - mongo:/data/db
+   - mongo:/data/db1
 
 volumes:
  mongo:
+  
+
+
+

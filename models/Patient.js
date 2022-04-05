@@ -3,6 +3,7 @@ const Gender = require("./enums/GenderEnum");
 const MealType = require("./enums/MealTypeEnum");
 const AllergenGroups = require("./enums/AllergenGroupsEnum");
 const Objective = require("./enums/ObjectiveEnum");
+const ActivityLevel = require("./enums/ActivityLevelEnum");
 
 const Patient = new mongoose.Schema(
   {
@@ -32,7 +33,7 @@ const Patient = new mongoose.Schema(
         trim: true,
       },
     },
-    PhysicalAttributes: {
+    physicalAttributes: {
       heightCm: {
         type: Number,
         required: true,
@@ -47,28 +48,38 @@ const Patient = new mongoose.Schema(
         enum: Gender,
       },
     },
-    Objective: {
+    objective: {
       type: String,
       required: true,
-      enum: Objective,
+      enum: Object.values(Objective),
     },
     nutritionalPreferences: {
-      allergenGroups: {
-        type: Array,
-        required: true,
-        enum: AllergenGroups,
-      },
+      allergenGroups: [
+        {
+          name: {
+            type: String,
+            required: true,
+            trim: true,
+            enum: Object.values(AllergenGroups),
+          },
+          boolean: {
+            type: Boolean,
+            required: true,
+            default: false,
+          },
+        },
+      ],
     },
     habits: {
       activityLevel: {
         type: String,
         required: true,
-        enum: activityLevel,
+        enum: Object.values(ActivityLevel),
       },
       dailyMeals: {
-        type: Array,
+        type: [String],
         required: true,
-        enum: MealType,
+        enum: Object.values(MealType),
       },
     },
     isSubscribed: {
@@ -83,4 +94,13 @@ const Patient = new mongoose.Schema(
   },
   { timestamps: true }
 );
+
+Object.assign(Patient.statics, {
+  Gender,
+  Objective,
+  AllergenGroups,
+  ActivityLevel,
+  MealType,
+});
+
 module.exports = mongoose.model("Patient", Patient);

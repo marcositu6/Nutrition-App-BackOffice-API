@@ -1,5 +1,7 @@
 const router = require("express").Router();
 const User = require("../models/User");
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 
 // GET all inventories
 router.get("/", (req, res) => {
@@ -42,7 +44,8 @@ router.patch("/:id", getUser, async (req, res) => {
     res.user.email = req.body.email;
   }
   if (req.body.password != null) {
-    res.user.password = req.body.password;
+    const hashedPassword = await bcrypt.hash(req.body.password, 10);
+    res.user.password = hashedPassword;
   }
   try {
     const updatedUser = await res.user.save();
@@ -61,9 +64,11 @@ router.patch("/:id", getUser, async (req, res) => {
     },
  */
 router.post("/", async (req, res) => {
+  const hashedPassword = await bcrypt.hash(req.body.password, 10);
+
   const user = new User({
     email: req.body.email,
-    password: req.body.password,
+    password: hashedPassword,
   });
 
   await user.save(function (err) {

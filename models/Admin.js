@@ -8,14 +8,27 @@ const Admin = new mongoose.Schema(
       type: String,
       required: true,
       trim: true,
-      default: "Admin",
       enum: Object.values(AdminRoles),
     },
-    permissions: {
-      type: Array,
-      default: {},
-      enum: Object.values(AdminRoles),
+    name: {
+      type: String,
+      trim: true,
     },
+    permissions: [
+      {
+        name: {
+          type: String,
+          required: true,
+          trim: true,
+          enum: Object.values(Permissions),
+        },
+        boolean: {
+          type: Boolean,
+          required: true,
+          default: false,
+        },
+      },
+    ],
     user: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
@@ -23,7 +36,6 @@ const Admin = new mongoose.Schema(
   },
   { timestamps: true }
 );
-Object.assign(Admin.role, { AdminRoles });
-Object.assign(Admin.permissions, { AdminRoles });
+Object.assign(Admin.statics, { AdminRoles, Permissions });
 
 module.exports = mongoose.model("Admin", Admin);

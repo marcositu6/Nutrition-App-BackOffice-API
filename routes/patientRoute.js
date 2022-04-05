@@ -3,15 +3,15 @@ const Patient = require("../models/Patient");
 
 // GET all inventories
 router.get("/", (req, res) => {
-  Patient.find()
-    .then((patents) => {
+  Patient.find({})
+    .then((patients) => {
       res.json({
         confirmation: "success",
         data: patients,
       });
     })
     .catch((err) => {
-      res.status(404).send("Users not found.");
+      res.status(404).send(err);
     });
 });
 
@@ -33,38 +33,41 @@ async function getPatient(req, res, next) {
 
 // GET inventory by ID
 router.get("/:id", getPatient, (req, res) => {
-  res.status(200).json(res.user);
+  res.status(200).json(res.patient);
 });
 
 // EDIT inventory by ID
 router.patch("/:id", getPatient, async (req, res) => {
   if (req.body.firstName != null) {
-    res.user.firstName = req.body.firstName;
+    res.patient.firstName = req.body.firstName;
   }
   if (req.body.lastName != null) {
-    res.user.lastName = req.body.lastName;
+    res.patient.lastName = req.body.lastName;
   }
   if (req.body.birthDate != null) {
-    res.user.birthDate = req.body.birthDate;
+    res.patient.birthDate = req.body.birthDate;
   }
   if (req.body.address != null) {
-    res.user.address = req.body.address;
+    res.patient.address = req.body.address;
   }
-  if (req.body.PhysicalAttributes != null) {
-    res.user.PhysicalAttributes = req.body.PhysicalAttributes;
+  if (req.body.physicalAttributes != null) {
+    res.patient.physicalAttributes = req.body.physicalAttributes;
+  }
+  if (req.body.objective != null) {
+    res.patient.objective = req.body.objective;
   }
   if (req.body.nutritionalPreferences != null) {
-    res.user.nutritionalPreferences = req.body.nutritionalPreferences;
+    res.patient.nutritionalPreferences = req.body.nutritionalPreferences;
   }
   if (req.body.habits != null) {
-    res.user.habits = req.body.habits;
+    res.patient.habits = req.body.habits;
   }
   if (req.body.isSubscribed != null) {
-    res.user.isSubscribed = req.body.isSubscribed;
+    res.patient.isSubscribed = req.body.isSubscribed;
   }
   try {
-    const updatedUser = await res.user.save();
-    res.json(updatedUser);
+    const updatedPatient = await res.patient.save();
+    res.json(updatedPatient);
   } catch (err) {
     res.status(400).json({ message: err.message });
   }
@@ -88,7 +91,7 @@ router.patch("/:id", getPatient, async (req, res) => {
         },
       "Objective": "GAIN_WEIGHT",
       "nutritionalPreferences": {
-          AllergenGroups: { "CRUSTACEANS", "PEANUTS" },
+          AllergenGroups: [ {"name": "GLUTEN", "boolean": "TRUE"}, {"CRUSTACEANS", "FALSE"}, {"EGGS", "FALSE"}, {"FISH", "FALSE"}, {"PEANUTS", "TRUE"}... ],
       },
       "habits": {
         "activityLevel": "MODERATE",  
@@ -104,11 +107,12 @@ router.post("/", async (req, res) => {
     lastName: req.body.lastName,
     birthDate: req.body.birthDate,
     address: req.body.address,
-    PhysicalAttributes: req.body.PhysicalAttributes,
-    Objective: req.body.Objective,
+    physicalAttributes: req.body.physicalAttributes,
+    objective: req.body.objective,
     nutritionalPreferences: req.body.nutritionalPreferences,
     habits: req.body.habits,
     isSubscribed: req.body.isSubscribed,
+    user: req.body.user,
   });
 
   await patient.save(function (err) {

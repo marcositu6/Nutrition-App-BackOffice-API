@@ -39,10 +39,13 @@ router.get("/:id", getAdmin, (req, res) => {
 // EDIT inventory by ID
 router.patch("/:id", getAdmin, async (req, res) => {
   if (req.body.role != null) {
-    res.user.role = req.body.role;
+    res.admin.role = req.body.role;
   }
   if (req.body.permissions != null) {
-    res.user.permissions = req.body.permissions;
+    res.admin.permissions = req.body.permissions;
+  }
+  if (req.body.name != null) {
+    res.admin.name = req.body.name;
   }
   try {
     const updatedAdmin = await res.admin.save();
@@ -57,13 +60,16 @@ router.patch("/:id", getAdmin, async (req, res) => {
 /* INCOMING DATA FORMAT
     {
       "role": "ADMIN",
-      "permissions": {"MODIFYALLERGIES", "DELETEUSER", "MODIFYUSER"}
+      "permissions": [ {"name": "DELETEUSER", "boolean": "TRUE"}, {"name": "MODIFYUSER", "boolean": "TRUE"}, {"name": "MODIFYALLERGIES", "boolean": "FALSE"}, {"name": "MODIFYPATIENTINFO", "boolean": "FALSE"}, {"name": "RECIPEREVIEW", "boolean": "TRUE"} ],
+      "user": :id,
     },
  */
 router.post("/", async (req, res) => {
   const admin = new Admin({
     role: req.body.role,
     permissions: req.body.permissions,
+    user: req.body.user,
+    name: req.body.name,
   });
 
   await admin.save(function (err) {
@@ -79,7 +85,7 @@ router.post("/", async (req, res) => {
 // route -> delete /api/v1/users/:id
 router.delete("/:id", getAdmin, async (req, res) => {
   try {
-    await res.Admin.remove();
+    await res.admin.remove();
     res.json({ message: "Deleted Admin" });
   } catch (err) {
     console.log(err);
