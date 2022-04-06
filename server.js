@@ -22,6 +22,7 @@ db.once("open", () => console.log("node connected to database"));
 const userRoute = require("./routes/userRoute");
 const adminRoute = require("./routes/adminRoute");
 const patientRoute = require("./routes/patientRoute");
+const recipesRoute = require("./routes/recipesRoute");
 
 const app = express();
 app.use(express.json());
@@ -30,5 +31,6 @@ app.use(cors());
 app.use("/api/v1/users", userRoute);
 app.use("/api/v1/admin", adminRoute);
 app.use("/api/v1/patient", patientRoute);
+app.use("/api/v1/recipes", recipesRoute);
 
 app.listen(PORT, () => console.log(`Listening on ${PORT}`));

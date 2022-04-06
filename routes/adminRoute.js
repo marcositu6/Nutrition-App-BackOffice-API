@@ -47,6 +47,9 @@ router.patch("/:id", getAdmin, async (req, res) => {
   if (req.body.name != null) {
     res.admin.name = req.body.name;
   }
+  if (req.body.logs != null) {
+    res.admin.logs = req.body.logs;
+  }
   try {
     const updatedAdmin = await res.admin.save();
     res.json(updatedAdmin);
@@ -63,6 +66,11 @@ router.patch("/:id", getAdmin, async (req, res) => {
       "permissions": [ {"name": "DELETEUSER", "boolean": "TRUE"}, {"name": "MODIFYUSER", "boolean": "TRUE"}, {"name": "MODIFYALLERGIES", "boolean": "FALSE"}, {"name": "MODIFYPATIENTINFO", "boolean": "FALSE"}, {"name": "RECIPEREVIEW", "boolean": "TRUE"} ],
       "user": :id,
     },
+    "role": "ADMIN",
+     "permissions": [ {"name": "DELETE_USER", "boolean": "true"}, {"name": "MODIFY_USER", "boolean": "true"}, {"name": "MODIFY_ALLERGIES", "boolean": "false"}, {"name": "MODIFY_PATIENT_INFO", "boolean": "false"}, {"name": "RECIPE_REVIEW", "boolean": "true"} ],
+    "user": "6247657674d581470ce1cc6c",
+    "name": "MarcosItu6"
+
  */
 router.post("/", async (req, res) => {
   const admin = new Admin({
@@ -70,6 +78,7 @@ router.post("/", async (req, res) => {
     permissions: req.body.permissions,
     user: req.body.user,
     name: req.body.name,
+    logs: req.body.logs,
   });
 
   await admin.save(function (err) {

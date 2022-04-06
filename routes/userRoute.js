@@ -47,6 +47,9 @@ router.patch("/:id", getUser, async (req, res) => {
     const hashedPassword = await bcrypt.hash(req.body.password, 10);
     res.user.password = hashedPassword;
   }
+  if (req.body.logs != null) {
+    res.user.logs = req.body.logs;
+  }
   try {
     const updatedUser = await res.user.save();
     res.json(updatedUser);
@@ -69,6 +72,7 @@ router.post("/", async (req, res) => {
   const user = new User({
     email: req.body.email,
     password: hashedPassword,
+    logs: req.body.logs,
   });
 
   await user.save(function (err) {
